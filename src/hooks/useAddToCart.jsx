@@ -10,9 +10,9 @@ const useAddToCart = () => {
         id: item.id,
         name: item.name,
         description: item.description,
-        price: (item.price || item.defaultPrice) / 100,
+        price: item.price ?? item.defaultPrice,
         imageId: item.imageId,
-      })
+      }),
     );
   };
 

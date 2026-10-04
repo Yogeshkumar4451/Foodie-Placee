@@ -1,4 +1,5 @@
 import "./index.css";
+
 import { Suspense, useState } from "react";
 import { Outlet } from "react-router-dom";
 
@@ -15,14 +16,16 @@ const App = () => {
   const isOnline = useOnlineStatus();
   const [user, setUser] = useState(null);
 
-  const handleRetry = () => {
-    if (navigator.onLine) {
-      window.location.reload();
-    }
-  };
-
   if (!isOnline) {
-    return <OfflineScreen onRetry={handleRetry} />;
+    return (
+      <OfflineScreen
+        onRetry={() => {
+          if (navigator.onLine) {
+            window.location.reload();
+          }
+        }}
+      />
+    );
   }
 
   return (

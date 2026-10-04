@@ -2,16 +2,15 @@ import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
 import App from "./App";
-
 import Body from "./pages/Body";
-import AboutUs from "./pages/AboutUs";
-import Service from "./pages/Service";
-import ContactUs from "./pages/ContactUs";
-import Cart from "./pages/Cart";
 import Error from "./pages/Error";
-import RestoMenuPage from "./pages/RestoMenuPage";
 
+const AboutUs = lazy(() => import("./pages/AboutUs"));
+const Service = lazy(() => import("./pages/Service"));
+const ContactUs = lazy(() => import("./pages/ContactUs"));
+const RestoMenuPage = lazy(() => import("./pages/RestoMenuPage"));
 const Grocery = lazy(() => import("./pages/Grocery"));
+const Cart = lazy(() => import("./pages/Cart"));
 
 const AppRouter = createBrowserRouter([
   {
@@ -20,31 +19,31 @@ const AppRouter = createBrowserRouter([
     errorElement: <Error />,
     children: [
       {
-        path: "/",
+        index: true,
         element: <Body />,
       },
       {
-        path: "/AboutUs",
+        path: "AboutUs",
         element: <AboutUs />,
       },
       {
-        path: "/Service",
+        path: "Service",
         element: <Service />,
       },
       {
-        path: "/ContactUs",
+        path: "ContactUs",
         element: <ContactUs />,
       },
       {
-        path: "/Restaurants/:resId",
+        path: "Restaurants/:resId",
         element: <RestoMenuPage />,
       },
       {
-        path: "/Grocery",
+        path: "Grocery",
         element: <Grocery />,
       },
       {
-        path: "/Cart",
+        path: "Cart",
         element: <Cart />,
       },
     ],
