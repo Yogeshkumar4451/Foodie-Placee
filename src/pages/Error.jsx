@@ -1,31 +1,33 @@
-import { useRouteError, useNavigate } from "react-router-dom";
+import { Link, useRouteError } from "react-router-dom";
 
 const Error = () => {
   const error = useRouteError();
-  const navigate = useNavigate();
+
+  const status = error?.status || 404;
+  const message =
+    error?.statusText || "The page you're looking for doesn't exist.";
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-orange-50 px-4">
-      <div className="w-full max-w-lg bg-white rounded-3xl shadow-lg p-8 sm:p-10 text-center">
-        <h1 className="text-6xl sm:text-7xl md:text-8xl font-extrabold text-orange-500 mb-4">
-          {error?.status || "Oops!"}
+    <div className="flex min-h-[70vh] items-center justify-center bg-orange-50 px-4 py-12">
+      <div className="w-full max-w-lg rounded-3xl bg-white p-8 text-center shadow-xl sm:p-10">
+        <div className="mb-4 text-7xl font-extrabold text-orange-500 sm:text-8xl">
+          {status}
+        </div>
+
+        <h1 className="mb-3 text-2xl font-bold text-gray-800 sm:text-3xl">
+          Something Went Wrong
         </h1>
 
-        <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">
-          Something Went Wrong
-        </h2>
-
-        <p className="text-sm sm:text-base text-gray-600 leading-relaxed mb-8">
-          {error?.statusText ||
-            "The page you are looking for doesn’t exist or broke reality."}
+        <p className="mx-auto max-w-md text-sm leading-relaxed text-gray-500 sm:text-base">
+          {message}
         </p>
 
-        <button
-          onClick={() => navigate("/")}
-          className="w-full sm:w-auto px-8 py-3 rounded-xl bg-orange-500 text-white font-semibold hover:bg-orange-600 active:scale-95 transition"
+        <Link
+          to="/"
+          className="mt-7 inline-block cursor-pointer rounded-xl bg-orange-500 px-7 py-3 font-semibold text-white shadow-md transition hover:bg-orange-600 hover:shadow-lg active:scale-95"
         >
           Go Back Home
-        </button>
+        </Link>
       </div>
     </div>
   );

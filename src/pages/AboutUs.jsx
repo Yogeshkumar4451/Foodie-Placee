@@ -1,110 +1,108 @@
 import { useState } from "react";
 import Accordion from "../components/Accordion";
 
+const sections = [
+  {
+    title: "What Is Foodie Place?",
+    content: (
+      <p>
+        Foodie Place is a React-based restaurant discovery and food ordering
+        frontend. Users can explore restaurants, search and filter them, open
+        restaurant menus, and manage food items through a Redux-powered cart.
+      </p>
+    ),
+  },
+  {
+    title: "How Does It Work?",
+    content: (
+      <p>
+        Restaurant and menu data comes from Firebase Firestore. React handles
+        the UI, React Router manages navigation, custom hooks handle reusable
+        logic, and Redux Toolkit manages the global cart state.
+      </p>
+    ),
+  },
+  {
+    title: "What I Built",
+    content: (
+      <p>
+        The project includes responsive navigation, restaurant search, top-rated
+        filtering, dynamic restaurant routes, menu fetching, cart management,
+        loading states, offline detection, and reusable React components.
+      </p>
+    ),
+  },
+];
+
+const highlights = [
+  {
+    value: "React",
+    title: "Frontend",
+  },
+  {
+    value: "Firebase",
+    title: "Data Layer",
+  },
+  {
+    value: "Redux",
+    title: "State Management",
+  },
+];
+
 const AboutUs = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
-  const sections = [
-    {
-      title: "Who We Are",
-      content: (
-        <>
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Foodie Place started with a simple idea — make great food accessible
-            to everyone. Whether you’re craving street-style chole bhature, a
-            warm cheesy pizza, or something healthy for that “new-me” mood, we
-            bring the best from your favorite restaurants right to your
-            doorstep.
-          </p>
-
-          <p className="text-gray-600 leading-relaxed">
-            What began as a tiny 2-person project is now a buzzing platform
-            trusted by thousands. Still, we run with the same hunger:
-            <span className="font-semibold text-gray-800">
-              {" "}
-              top quality, fast delivery, and honest service.
-            </span>
-          </p>
-        </>
-      ),
-    },
-    {
-      title: "Our Mission",
-      content: (
-        <p className="text-gray-600 leading-relaxed">
-          To redefine food delivery with trust, transparency, and unbeatable
-          taste. We don’t just deliver meals — we deliver moments: late-night
-          cravings, Sunday family lunch, breakup ice-cream orders, and
-          everything in between.
-        </p>
-      ),
-    },
-    {
-      title: "Our Core Values",
-      content: (
-        <ul className="space-y-4">
-          {[
-            "Quality You Can Taste",
-            "Speed You Can Rely On",
-            "Service That Feels Personal",
-            "Innovation That Never Stops",
-          ].map((value, index) => (
-            <li key={index} className="flex items-center gap-3 text-gray-700">
-              <span className="text-orange-500 text-lg">✔</span>
-              <span className="text-base sm:text-lg">{value}</span>
-            </li>
-          ))}
-        </ul>
-      ),
-    },
-  ];
+  const handleToggle = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
 
   return (
     <div className="min-h-screen bg-orange-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-        <section className="text-center mb-10 sm:mb-12">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            About The Foodie Place
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+        <section className="mb-10 text-center sm:mb-12">
+          <h1 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl md:text-5xl">
+            About Foodie Place
           </h1>
 
-          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Where Flavors Meet Passion And Every Order Feels Like Home.
+          <p className="mx-auto max-w-2xl text-base leading-relaxed text-gray-600 sm:text-lg">
+            A React food ordering project built to explore modern frontend
+            development, real-time data flow, and state management.
           </p>
         </section>
 
-        <section className="space-y-5 sm:space-y-6 mb-12 sm:mb-14">
+        <section className="mb-12 space-y-5 sm:mb-14">
           {sections.map((section, index) => (
             <Accordion
-              key={index}
+              key={section.title}
               title={section.title}
               isOpen={openIndex === index}
-              onToggle={() => setOpenIndex(openIndex === index ? null : index)}
+              onToggle={() => handleToggle(index)}
             >
-              {section.content}
+              <div className="leading-relaxed text-gray-600">
+                {section.content}
+              </div>
             </Accordion>
           ))}
         </section>
 
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 cursor-pointer">
-          <div className="bg-white rounded-2xl shadow-md p-6 sm:p-8 text-center hover:-translate-y-2 transition">
-            <h3 className="text-2xl sm:text-3xl font-bold text-orange-500 mb-2">
-              500+
-            </h3>
-            <p className="text-gray-600 font-medium">Partner Restaurants</p>
-          </div>
+        <section>
+          <h2 className="mb-6 text-center text-2xl font-bold text-gray-800 sm:text-3xl">
+            Project Highlights
+          </h2>
 
-          <div className="bg-white rounded-2xl shadow-md p-6 sm:p-8 text-center hover:-translate-y-2 transition">
-            <h3 className="text-2xl sm:text-3xl font-bold text-orange-500 mb-2">
-              15,000+
-            </h3>
-            <p className="text-gray-600 font-medium">Happy Customers</p>
-          </div>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+            {highlights.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-2xl bg-white p-6 text-center shadow-md transition hover:-translate-y-2 hover:shadow-xl sm:p-8"
+              >
+                <h3 className="text-2xl font-bold text-orange-500 sm:text-3xl">
+                  {item.value}
+                </h3>
 
-          <div className="bg-white rounded-2xl shadow-md p-6 sm:p-8 text-center hover:-translate-y-2 transition sm:col-span-2 lg:col-span-1">
-            <h3 className="text-2xl sm:text-3xl font-bold text-orange-500 mb-2">
-              30+ Cities
-            </h3>
-            <p className="text-gray-600 font-medium">Across India</p>
+                <p className="mt-2 font-medium text-gray-600">{item.title}</p>
+              </div>
+            ))}
           </div>
         </section>
       </div>

@@ -4,129 +4,90 @@ const ContactUs = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    setSubmitted(true);
+    setName("");
+    setEmail("");
+    setMessage("");
   };
 
   return (
     <div className="min-h-screen bg-orange-50 py-10 sm:py-16">
-      <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Heading */}
-        <div className="text-center mb-10 sm:mb-12">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+      <div className="mx-auto max-w-xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 text-center sm:mb-12">
+          <h1 className="mb-3 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
             For Any Enquiry Or Issue
           </h1>
 
-          <h2 className="text-base sm:text-lg text-gray-600">
+          <p className="text-base text-gray-600 sm:text-lg">
             Contact Us By Filling Our Form
-          </h2>
+          </p>
         </div>
 
         <form
           onSubmit={handleSubmit}
-          className="bg-white rounded-2xl sm:rounded-3xl shadow-md p-6 sm:p-8 lg:p-10 space-y-6"
+          className="space-y-6 rounded-2xl bg-white p-6 shadow-md sm:rounded-3xl sm:p-8 lg:p-10"
         >
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="mb-1 block text-sm font-medium text-gray-700">
               Name
             </label>
 
             <input
               type="text"
-              placeholder="Enter Your Name"
+              required
               value={name}
+              placeholder="Enter your name"
               onChange={(e) => setName(e.target.value)}
-              className="
-                w-full
-                h-12
-                px-4
-                rounded-xl
-                border border-gray-300
-                text-gray-700 text-sm
-                placeholder-gray-400
-                focus:border-orange-500
-                focus:ring-2 focus:ring-orange-200
-                focus:outline-none
-                transition
-              "
+              className="h-12 w-full rounded-xl border border-gray-300 px-4 text-sm text-gray-700 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="mb-1 block text-sm font-medium text-gray-700">
               Email
             </label>
 
             <input
               type="email"
-              placeholder="Enter Your Email"
+              required
               value={email}
+              placeholder="Enter your email"
               onChange={(e) => setEmail(e.target.value)}
-              className="
-                w-full
-                h-12
-                px-4
-                rounded-xl
-                border border-gray-300
-                text-gray-700 text-sm
-                placeholder-gray-400
-                focus:border-orange-500
-                focus:ring-2 focus:ring-orange-200
-                focus:outline-none
-                transition
-              "
+              className="h-12 w-full rounded-xl border border-gray-300 px-4 text-sm text-gray-700 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="mb-1 block text-sm font-medium text-gray-700">
               Message
             </label>
 
             <textarea
-              placeholder="Write Your Message Here..."
+              required
               value={message}
+              placeholder="Write your message here..."
               onChange={(e) => setMessage(e.target.value)}
-              className="
-                w-full
-                min-h-[120px]
-                sm:min-h-[150px]
-                px-4
-                py-3
-                rounded-xl
-                border border-gray-300
-                text-gray-700 text-sm
-                placeholder-gray-400
-                focus:border-orange-500
-                focus:ring-2
-                focus:ring-orange-200
-                focus:outline-none
-                transition
-                resize-none
-              "
+              className="min-h-[130px] w-full resize-none rounded-xl border border-gray-300 px-4 py-3 text-sm text-gray-700 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-200 sm:min-h-[150px]"
             />
           </div>
 
           <button
             type="submit"
-            className="
-              cursor-pointer
-              w-full
-              h-12
-              rounded-xl
-              bg-orange-500
-              text-white
-              font-semibold
-              hover:bg-orange-600
-              active:scale-95
-              transition
-              shadow-sm
-              hover:shadow-md
-            "
+            className="h-12 w-full cursor-pointer rounded-xl bg-orange-500 font-semibold text-white shadow-sm transition hover:bg-orange-600 active:scale-95"
           >
             Send Message
           </button>
+
+          {submitted && (
+            <div className="rounded-xl bg-green-50 px-4 py-3 text-center text-sm font-semibold text-green-600">
+              ✅ Your message has been submitted successfully!
+            </div>
+          )}
         </form>
       </div>
     </div>
