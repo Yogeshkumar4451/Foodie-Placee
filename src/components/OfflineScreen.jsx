@@ -3,8 +3,7 @@ import { LuWifiOff } from "react-icons/lu";
 const OfflineScreen = ({ onRetry }) => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-orange-50 via-white to-pink-50 px-4">
-      <div className="w-full max-w-lg rounded-3xl bg-white p-6 text-center shadow-2xl sm:p-10">
-   
+      <div className="w-full max-w-lg rounded-3xl bg-white p-7 text-center shadow-2xl sm:p-10">
         <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-orange-100">
           <LuWifiOff className="h-9 w-9 text-orange-500" />
         </div>
@@ -21,38 +20,21 @@ const OfflineScreen = ({ onRetry }) => {
           </span>
         </h1>
 
-    
         <p className="mx-auto mt-4 max-w-md text-gray-500">
           Check your internet connection and reconnect to continue exploring
           Foodie Place.
         </p>
 
-
-        <div className="mx-auto mt-6 flex max-w-sm items-center gap-3 rounded-2xl bg-orange-50 px-4 py-3 text-left">
-          <span className="text-2xl">🍔</span>
-
-          <div>
-            <p className="text-sm font-bold text-gray-800">
-              Your food adventure is waiting
-            </p>
-
-            <p className="text-xs text-gray-500">
-              Reconnect to continue exploring.
-            </p>
-          </div>
-        </div>
-
-   
         <button
           type="button"
           onClick={onRetry}
-          className="mt-7 rounded-xl bg-gradient-to-r from-orange-500 to-pink-500 px-7 py-3 font-bold text-white shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl"
+          className="mt-7 cursor-pointer rounded-xl bg-gradient-to-r from-orange-500 to-pink-500 px-7 py-3 font-bold text-white shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl active:scale-95"
         >
           Try Again ↻
         </button>
 
         <p className="mt-4 text-xs text-gray-400">
-          We'll automatically reconnect when your Internet comes back.
+          We'll automatically reconnect when your internet comes back.
         </p>
       </div>
     </div>

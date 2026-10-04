@@ -1,45 +1,42 @@
-const CardItems = ({ name, cuisine, rating, price, image }) => {
+const CardItem = ({ name, cuisine, rating, price, image }) => {
   return (
-    <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col">
-      <img
-        src={image}
-        alt={name}
-        className="w-full h-40 sm:h-44 md:h-48 object-cover"
-      />
+    <div className="group h-full overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+      <div className="relative overflow-hidden">
+        <img
+          src={image}
+          alt={name || "Restaurant"}
+          className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
 
-      <div className="p-4 sm:p-5 text-center space-y-2 flex-1 flex flex-col">
-        <h3 className="text-base sm:text-lg font-semibold text-gray-900 truncate">
+        {rating && (
+          <span className="absolute top-3 right-3 rounded-full bg-white/95 px-3 py-1 text-sm font-bold text-orange-600 shadow-md">
+            ⭐ {rating}
+          </span>
+        )}
+      </div>
+
+      <div className="flex h-[180px] flex-col p-4 sm:p-5">
+        <h3
+          title={name}
+          className="truncate text-lg font-bold text-gray-900 transition-colors group-hover:text-orange-600"
+        >
           {name}
         </h3>
 
-        <p className="text-sm text-gray-600 line-clamp-2">{cuisine}</p>
-
-        <p className="text-sm font-semibold text-orange-500">⭐ {rating}</p>
-
-        <p className="text-sm sm:text-base font-bold text-gray-800">
-          ₹ {price}
+        <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-gray-600">
+          {Array.isArray(cuisine) ? cuisine.join(", ") : cuisine}
         </p>
 
-        <button
-          className="
-            mt-auto
-            w-full
-            py-2.5
-            rounded-lg
-            bg-orange-500
-            text-white
-            font-semibold
-            hover:bg-orange-600
-            active:scale-95
-            transition
-            shadow-sm hover:shadow-md
-          "
-        >
-          Buy Now
-        </button>
+        <div className="mt-auto flex items-center justify-between pt-4">
+          <span className="font-bold text-gray-800">₹{price}</span>
+
+          <span className="text-sm font-semibold text-orange-500 transition-all group-hover:translate-x-1 group-hover:text-orange-600">
+            View Menu →
+          </span>
+        </div>
       </div>
     </div>
   );
 };
 
-export default CardItems;
+export default CardItem;

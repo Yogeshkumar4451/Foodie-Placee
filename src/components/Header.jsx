@@ -1,9 +1,10 @@
-import { LOGO_URL } from "../Assets/images/Logo";
 import { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+import { LOGO_URL } from "../Assets/images/Logo";
 import useOnlineStatus from "../hooks/useOnlineStatus";
 import UserContext from "../utils/UserContext";
-import { useSelector } from "react-redux";
 
 import OnlineIndicator from "./OnlineIndicator";
 import HeaderNav from "./HeaderNav";
@@ -11,10 +12,11 @@ import HeaderNav from "./HeaderNav";
 const Header = () => {
   const isOnline = useOnlineStatus();
   const { user, setUser } = useContext(UserContext);
-
-  const cartItems = useSelector((state) => state.cart?.items || []);
-
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const cartItems = useSelector((state) => state.cart.items);
+
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   const navItems = [
     { name: "Home", path: "/" },
@@ -25,38 +27,34 @@ const Header = () => {
     { name: "Cart", path: "/Cart" },
   ];
 
-  const handleAuthToggle = () => {
-    if (user) {
-      setUser(null);
-    } else {
-      setUser({ name: "Yogesh Sahu" });
-    }
+  const handleAuth = () => {
+    setUser(user ? null : { name: "Yogesh Sahu" });
   };
 
   return (
     <header className="sticky top-0 z-50 bg-gradient-to-r from-orange-600 via-pink-500 to-orange-400 shadow-lg">
-      <div className="max-w-7xl mx-auto px-4 py-5">
-        <div className="hidden lg:flex items-center">
-          <NavLink to="/" className="shrink-0">
+      <div className="mx-auto max-w-7xl px-4 py-5">
+        <div className="hidden items-center lg:flex">
+          <NavLink to="/">
             <img
               src={LOGO_URL}
               alt="Foodie Place"
-              className="h-16 w-auto hover:scale-105 transition duration-300"
+              className="h-16 w-auto transition hover:scale-105"
             />
           </NavLink>
 
-          <div className="flex-1 flex justify-center">
-            <HeaderNav navItems={navItems} cartItems={cartItems} />
+          <div className="flex-1 justify-center flex">
+            <HeaderNav navItems={navItems} cartCount={cartCount} />
           </div>
 
-          <div className="flex items-center gap-5 shrink-0">
+          <div className="flex items-center gap-5">
             <OnlineIndicator isOnline={isOnline} />
 
             <button
-              onClick={handleAuthToggle}
-              className={`px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 ${
+              onClick={handleAuth}
+              className={`rounded-xl px-5 py-2.5 text-sm font-semibold transition ${
                 user
-                  ? "bg-white/10 text-white border border-white/20 hover:bg-white/20"
+                  ? "border border-white/20 bg-white/10 text-white hover:bg-white/20"
                   : "bg-white text-orange-600 hover:shadow-lg"
               }`}
             >
@@ -64,45 +62,26 @@ const Header = () => {
             </button>
           </div>
         </div>
+
         <div className="flex items-center justify-between gap-3 lg:hidden">
-          <NavLink to="/" className="shrink-0">
-            <img
-              src={LOGO_URL}
-              alt="Foodie Place"
-              className="h-12 w-auto transition-transform duration-300 hover:scale-105"
-            />
+          <NavLink to="/">
+            <img src={LOGO_URL} alt="Foodie Place" className="h-12 w-auto" />
           </NavLink>
 
-          <div className="flex-1 text-center leading-tight">
-            <h1 className="text-base sm:text-lg font-bold text-white">
+          <div className="flex-1 text-center">
+            <h1 className="text-base font-bold text-white sm:text-lg">
               Discover Your Next Meal
             </h1>
 
-            <p className="mt-1 text-[10px] sm:text-xs font-medium text-white/80">
+            <p className="mt-1 text-[10px] text-white/80 sm:text-xs">
               Search • Taste • Enjoy
             </p>
           </div>
 
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-            className="
-      shrink-0
-      flex
-      h-11
-      w-11
-      items-center
-      justify-center
-      rounded-xl
-      bg-white/10
-      text-white
-      text-2xl
-      font-bold
-      transition-all
-      duration-300
-      hover:bg-white/20
-      active:scale-95
-    "
+            aria-label="Toggle menu"
+            className="h-11 w-11 rounded-xl bg-white/10 text-2xl font-bold text-white hover:bg-white/20"
           >
             {menuOpen ? "✕" : "☰"}
           </button>
@@ -111,17 +90,17 @@ const Header = () => {
         {menuOpen && (
           <>
             <div
-              className="fixed inset-0 bg-black/50 z-40"
+              className="fixed inset-0 z-40 bg-black/50"
               onClick={() => setMenuOpen(false)}
             />
 
-            <div className="fixed top-0 left-0 h-full w-72 bg-gradient-to-b from-orange-600 via-pink-500 to-orange-400 z-50 shadow-2xl p-6 overflow-y-auto">
-              <div className="flex justify-between items-center mb-8">
+            <div className="fixed left-0 top-0 z-50 h-full w-72 overflow-y-auto bg-gradient-to-b from-orange-600 via-pink-500 to-orange-400 p-6 shadow-2xl">
+              <div className="mb-8 flex items-center justify-between">
                 <img src={LOGO_URL} alt="Foodie Place" className="h-14" />
 
                 <button
                   onClick={() => setMenuOpen(false)}
-                  className="text-white text-3xl"
+                  className="text-3xl text-white"
                 >
                   ✕
                 </button>
@@ -131,25 +110,24 @@ const Header = () => {
 
               <HeaderNav
                 navItems={navItems}
-                cartItems={cartItems}
+                cartCount={cartCount}
                 mobile
                 onNavigate={() => setMenuOpen(false)}
               />
-              <div className="mt-8 border-t border-white/20 pt-6">
-                <button
-                  onClick={() => {
-                    handleAuthToggle();
-                    setMenuOpen(false);
-                  }}
-                  className={`w-full rounded-xl py-3 font-semibold transition-all duration-300 ${
-                    user
-                      ? "bg-white/10 text-white border border-white/20 hover:bg-white/20"
-                      : "bg-white text-orange-600 hover:shadow-lg"
-                  }`}
-                >
-                  {user ? `👤 ${user.name.split(" ")[0]} | Logout` : "🔑 Login"}
-                </button>
-              </div>
+
+              <button
+                onClick={() => {
+                  handleAuth();
+                  setMenuOpen(false);
+                }}
+                className={`mt-8 w-full rounded-xl py-3 font-semibold ${
+                  user
+                    ? "border border-white/20 bg-white/10 text-white"
+                    : "bg-white text-orange-600"
+                }`}
+              >
+                {user ? `👤 ${user.name.split(" ")[0]} | Logout` : "🔑 Login"}
+              </button>
             </div>
           </>
         )}
